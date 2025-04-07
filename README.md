@@ -1,1 +1,1 @@
-# MyVirtualStylist
+The Digital Wardrobe Stylist is a personal fashion assistant app designed to help users effortlessly choose daily outfits, shoes, and accessories from their existing wardrobe. With features like a virtual closet for uploading and organizing clothing, smart outfit suggestions based on weather, occasion, or style preferences, and a Clueless-style mix-and-match function, this app brings fashion and tech together in a fun, practical way.
