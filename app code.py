@@ -1,9 +1,9 @@
-from flask import Flask, render_template, request, redirect, url_for, session
+from flask import Flask, render_template, request, redirect, url_for, session, flash
 import os
 from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
-app.secret_key = 'style_secret'  # Needed for session
+app.secret_key = 'style_secret_key'
 UPLOAD_FOLDER = 'static/uploads'
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
@@ -15,16 +15,20 @@ def allowed_file(filename):
 def index():
     if 'name' in session:
         name = session['name']
-        tone = session['tone']
+        tone = session.get('tone', '')
+        # Alert user to personalize if they left name as default
+        if name.lower() in ['user', 'guest', '']:
+            flash("Don't forget to personalize your username for a stylish welcome! ✨")
         return render_template('index.html', name=name, tone=tone)
     return redirect(url_for('quiz'))
 
 @app.route('/quiz', methods=['GET', 'POST'])
 def quiz():
     if request.method == 'POST':
+        # Save answers into session
         session['tone'] = request.form['tone']
         session['color_theory'] = request.form['color_theory']
-        session['name'] = request.form['name']
+        session['name'] = request.form['name'].strip().title()  # Make it look nice
         return redirect(url_for('index'))
     return render_template('quiz.html')
 
