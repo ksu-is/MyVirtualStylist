@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Your Closet</title>
+</head>
+<body>
+    <h1>👗 Your Closet</h1>
+    <form method="POST" action="{{ url_for('upload') }}" enctype="multipart/form-data">
+        <input type="file" name="file" required>
+        <select name="season" required>
+            <option value="">Select Season</option>
+            <option value="summer">Summer</option>
+            <option value="fall">Fall</option>
+            <option value="winter">Winter</option>
+            <option value="spring">Spring</option>
+        </select>
+        <button type="submit">Upload</button>
+    </form>
+
+    {% for season, clothes in season_clothes.items() %}
+        <h2>{{ season.title() }} Closet</h2>
+        {% if clothes %}
+            <ul>
+                {% for item in clothes %}
+                    <li>
+                        <img src="{{ url_for('static', filename='uploads/' ~ season ~ '/' ~ item) }}" width="150">
+                        <a href="{{ url_for('favorite', season=season, filename=item) }}">⭐ Favorite</a>
+                        <a href="{{ url_for('profile', season=season, filename=item) }}">🔍 View</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No clothes added yet.</p>
+        {% endif %}
+    {% endfor %}
+    <a href="{{ url_for('favorites') }}">Go to Favorites</a>
+</body>
+</html>
