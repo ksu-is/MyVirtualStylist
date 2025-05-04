@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Favorites</title>
+</head>
+<body>
+    <h1>⭐ Your Favorite Outfits</h1>
+    {% if favorites %}
+        <ul>
+            {% for path in favorites %}
+                <li>
+                    <img src="{{ url_for('static', filename='uploads/' ~ path) }}" width="150">
+                    <a href="{{ url_for('profile', season=path.split('/')[0], filename=path.split('/')[1]) }}">View Profile</a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>You haven't favorited any outfits yet.</p>
+    {% endif %}
+    <a href="{{ url_for('closet') }}">← Back to Closet</a>
+</body>
+</html>
